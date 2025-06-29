@@ -1,0 +1,29 @@
+name: GPT Auto Post to WordPress
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 매일 자정 UTC 기준 실행
+  workflow_dispatch:      # 수동 실행도 가능하게 함
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          WP_ENDPOINT: ${{ secrets.WP_ENDPOINT }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+        run: python gpt_auto_post.py
