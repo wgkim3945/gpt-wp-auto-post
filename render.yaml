@@ -1,0 +1,14 @@
+
+services:
+  - type: cron
+    name: gpt-wp-autopost
+    schedule: "0 6 * * *"  # 매일 오전 6시 (KST)
+    runtime: python
+    plan: free
+    buildCommand: ""
+    startCommand: "python gpt_auto_post.py"
+    envVars:
+      - key: WP_USER
+        value: wgkim0512
+      - key: WP_APP_PASSWORD
+        value: X90M rDoU ARiw DKcR C3sS F9g1
